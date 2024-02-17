@@ -2,6 +2,7 @@ VENV=env
 PYTHON=$(VENV)/Scripts/python
 PIP=$(VENV)/Scripts/pip
 PY_CACHE=src/__pycache__ $(wildcard src/*/__pycache__)
+CWD=$(shell pwd)
 
 TEST_FILES=$(wildcard src/tests/*.py)
 
@@ -23,4 +24,4 @@ setup: requirements.txt
 	$(PIP) install -r requirements.txt
 
 test:
-	$(foreach file, $(TESTS), cd src && ../$(PYTHON) -m $(file) && cd ..;)
+	cd src && $(foreach file, $(TESTS),$(CWD)/$(PYTHON) -m $(file);)
