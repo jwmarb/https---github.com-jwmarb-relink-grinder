@@ -5,6 +5,8 @@
 An AFK Script for <em>Granblue Fantasy: Relink</em>
 </h2>
 
+**NOTE**: This is only compatible with Windows
+
 ## What is this?
 
 _Relink Grinder_ is an afk script for the video game, [Granblue Fantasy: Relink](https://store.steampowered.com/app/881020/Granblue_Fantasy_Relink/), a JRPG by Cygames. This game re-introduces many characters from the original game, [Granblue Fantasy](https://granbluefantasy.jp/en/), except for the fact that this is not a gacha. Every character can be customized to have different equipments and loadouts, most of which are obtained through boss drops. Every equipment requires materials to upgrade, and unfortunately, these upgrade materials are only obtainable through boss fights.
