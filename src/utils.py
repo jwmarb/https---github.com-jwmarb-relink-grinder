@@ -1,10 +1,14 @@
 import os
 import time
+
+import pyautogui
 import constants
 import win32gui
 
 
-def get_timestamp(start_time: float = time.perf_counter()) -> tuple[int, int, int]:
+def get_timestamp(
+    start_time: float = time.perf_counter(),
+) -> tuple[int, int, int]:
     now = max(int(time.perf_counter() - start_time), 0)
     seconds = now % 60
     minutes = (now // 60) % 60
@@ -21,5 +25,26 @@ def terminate_program(start_time: float):
 def check_granblue_relink():
     hwnd = win32gui.FindWindow(None, constants.HWND_NAME)
     if hwnd == 0:
-        print("Granblue Fantasy: Relink must be running to execute this script")
+        err = "Granblue Fantasy: Relink must be running to execute this script"
+        print(err)
         os._exit(0)
+
+
+def format_int(n: int) -> str:
+    if n >= 10:
+        return str(n)
+
+    return "0" + str(n)
+
+
+def is_on_screen(*images: str):
+    for file in images:
+        try:
+            pyautogui.locateOnScreen(
+                image=file, confidence=constants.CONFIDENCE
+            )
+            return True
+        except pyautogui.ImageNotFoundException:
+            pass
+
+    return False
