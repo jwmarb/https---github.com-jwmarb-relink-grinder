@@ -13,6 +13,7 @@ TESTS=$(patsubst %.py,%, $(patsubst tests/%,tests.%,$(patsubst src/%, %,$(TEST_F
 
 # Invoked if does not exist
 env/Scripts/activate: requirements.txt
+	rm -rf $(VENV)
 	python -m venv env
 	./$(PIP) install -r requirements.txt
 
