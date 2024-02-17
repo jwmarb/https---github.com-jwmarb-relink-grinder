@@ -41,6 +41,12 @@ class UtilsTest(unittest.TestCase):
         self.assertEqual(minutes, 0)
         self.assertEqual(hours, 0)
 
+    def test_format_int(self):
+        self.assertEqual("00", utils.format_int(0))
+        self.assertEqual("02", utils.format_int(2))
+        self.assertEqual("10", utils.format_int(10))
+        self.assertEqual("68", utils.format_int(68))
+
 
 if __name__ == "__main__":
     unittest.main()
