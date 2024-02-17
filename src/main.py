@@ -1,15 +1,16 @@
-import pyautogui
 import time
 import constants
 import keyboard
 from macros import Macros
 import decorators
 from utils import get_timestamp, terminate_program, check_granblue_relink
+from utils import format_int, is_on_screen
 
 
 def main():
+    # main constants
+    QUEST_DONE = (constants.QUEST_COMPLETE_SCREEN, constants.REPLAY_QUEST)
     check_granblue_relink()
-    pyautogui.useImageNotFoundException(False)
     time_start = time.perf_counter()
     keyboard.on_press_key(
         key="escape", callback=lambda _: terminate_program(time_start)
@@ -18,9 +19,11 @@ def main():
 
     def log(msg: str):
         seconds, minutes, hours = get_timestamp(time_start)
-        print(
-            f"[{hours if hours >= 10 else f'0{hours}'}:{minutes if minutes >= 10 else f'0{minutes}'}:{seconds if seconds >= 10 else f'0{seconds}'}]\t{msg}"
-        )
+        f_seconds = format_int(seconds)
+        f_minutes = format_int(minutes)
+        f_hours = format_int(hours)
+        timestamp = f"{f_hours}:{f_minutes}:{f_seconds}"
+        print(f"[{timestamp}]\t{msg}")
 
     while True:
 
@@ -34,33 +37,15 @@ def main():
             log(f"Runs Completed: {runs}")
 
         # When the user successfully completes the quest
-        while (
-            pyautogui.locateCenterOnScreen(
-                image=constants.QUEST_COMPLETE_SCREEN,
-                confidence=constants.CONFIDENCE,
-            )
-            != None
-            or pyautogui.locateCenterOnScreen(
-                image=constants.REPLAY_QUEST,
-                confidence=constants.CONFIDENCE,
-            )
-            != None
-        ):
+        while is_on_screen(*QUEST_DONE):
             on_run_complete()
 
-            if pyautogui.locateCenterOnScreen(
-                image=constants.CONTINUE_PLAYING_QUEST, confidence=constants.CONFIDENCE
-            ):
+            if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
                 Macros.continue_playing()
             Macros.left_click()
 
         # When the user is requires a revive
-        while (
-            pyautogui.locateCenterOnScreen(
-                image=constants.HP_ZERO, confidence=constants.CONFIDENCE
-            )
-            != None
-        ):
+        while is_on_screen(constants.HP_ZERO):
             Macros.left_click_spam()
 
         time.sleep(1)

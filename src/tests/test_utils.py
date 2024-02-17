@@ -35,7 +35,8 @@ class UtilsTest(unittest.TestCase):
         self.assertEqual(hours, 1)
 
     def test_timestamp_invalid_input(self):
-        seconds, minutes, hours = utils.get_timestamp(time.perf_counter() + 1398831)
+        invalid = time.perf_counter() + 1398831
+        seconds, minutes, hours = utils.get_timestamp(invalid)
         self.assertEqual(seconds, 0)
         self.assertEqual(minutes, 0)
         self.assertEqual(hours, 0)

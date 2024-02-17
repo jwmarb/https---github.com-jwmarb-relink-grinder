@@ -16,12 +16,16 @@ class Macros:
     _is_executing: bool = False
 
     @staticmethod
+    def _find_window(name: str):
+        return win32gui.FindWindow(None, name)
+
+    @staticmethod
     def _get_relink_hwnd():
         """
         Gets the relink hwnd
         """
-        if Macros._relink_hwnd == None:
-            Macros._relink_hwnd = win32gui.FindWindow(None, constants.HWND_NAME)
+        if Macros._relink_hwnd is None:
+            Macros._relink_hwnd = Macros._find_window(constants.HWND_NAME)
             if Macros._relink_hwnd == 0:
                 raise Exception('"Granblue Fantasy: Relink" not detected')
         return Macros._relink_hwnd
@@ -31,7 +35,7 @@ class Macros:
         """
         Handles the current hwnd
         """
-        if Macros._cur_hwnd == None:
+        if Macros._cur_hwnd is None:
             Macros._cur_hwnd = win32gui.GetForegroundWindow()
             if Macros._cur_hwnd != Macros._get_relink_hwnd():
                 Macros._cur_pos = win32api.GetCursorPos()
@@ -48,7 +52,7 @@ class Macros:
 
     @staticmethod
     def _reset_cur_hwnd(is_stopped: Callable[[], bool]):
-        if Macros._relink_hwnd == None:
+        if Macros._relink_hwnd is None:
             raise Exception("Tried to reset current hwnd when it is undefined")
 
         # Wait for main thread to finish executing bin file
@@ -57,7 +61,9 @@ class Macros:
 
         time.sleep(3)
 
-        if not is_stopped() and win32gui.GetForegroundWindow() != Macros._cur_hwnd:
+        is_same_hwnd = win32gui.GetForegroundWindow() == Macros._cur_hwnd
+
+        if not (is_stopped() or is_same_hwnd):
             keyboard.press_and_release("alt")
             win32gui.SetForegroundWindow(Macros._cur_hwnd)
             win32api.SetCursorPos(Macros._cur_pos)
