@@ -4,10 +4,11 @@ import constants
 import keyboard
 from macros import Macros
 import decorators
-from utils import get_timestamp, terminate_program
+from utils import get_timestamp, terminate_program, check_granblue_relink
 
 
 def main():
+    check_granblue_relink()
     pyautogui.useImageNotFoundException(False)
     time_start = time.perf_counter()
     keyboard.on_press_key(
