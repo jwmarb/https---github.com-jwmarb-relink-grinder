@@ -56,13 +56,12 @@ class Macros:
         will automatically select yes
         """
         Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
         Macros.delay()
         Macros._gamepad.release_button(
             vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP
         )
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
         Macros.delay()
 
@@ -92,6 +91,9 @@ class Macros:
         Macros._gamepad.update()
         Macros.delay()
         Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
         Macros.delay()
         Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
