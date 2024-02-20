@@ -51,7 +51,7 @@ Before running the program, make sure **Granblue Fantasy: Relink** is opened, an
 You will have to complete the quest first. Once you have completed the quest, you should be in the quest results screen. Enable `Repeat Quest`, then activate the afk script in the same terminal:
 
 ```sh
-make run
+make run main=main
 ```
 
 You should see something like:
