@@ -1,19 +1,14 @@
-import os
 import time
 from typing import Callable
+import pyautogui
 import win32gui
-from cancelable_thread import CancelableThread
 import constants
-import keyboard
-import win32api
+import vgamepad
 
 
 class Macros:
     _relink_hwnd: int | None = None
-    _cur_hwnd: int | None = None
-    _cur_pos: tuple[int, int] | None = None
-    _thread: CancelableThread | None = None
-    _is_executing: bool = False
+    _gamepad = vgamepad.VX360Gamepad()
 
     @staticmethod
     def _find_window(name: str):
@@ -31,78 +26,72 @@ class Macros:
         return Macros._relink_hwnd
 
     @staticmethod
-    def _cur_hwnd_handler():
+    def macro(fn: Callable[[], None]):
         """
-        Handles the current hwnd
+        Executes a macro based on virtual gamepad
         """
-        if Macros._cur_hwnd is None:
-            Macros._cur_hwnd = win32gui.GetForegroundWindow()
-            if Macros._cur_hwnd != Macros._get_relink_hwnd():
-                Macros._cur_pos = win32api.GetCursorPos()
-                Macros._thread = CancelableThread(
-                    lambda is_stopped: Macros._reset_cur_hwnd(is_stopped)
-                )
-                Macros._thread.start()
-        elif Macros._cur_hwnd != Macros._get_relink_hwnd():
-            Macros._thread.stop()
-            Macros._thread = CancelableThread(
-                lambda is_stopped: Macros._reset_cur_hwnd(is_stopped)
-            )
-            Macros._thread.start()
+        def wrapper():
+            # Focuses application window, if applicable
+            if win32gui.GetForegroundWindow() != Macros._get_relink_hwnd():
+                pyautogui.press("alt")
+                win32gui.SetForegroundWindow(Macros._get_relink_hwnd())
+
+            fn()
+
+        return wrapper
 
     @staticmethod
-    def _reset_cur_hwnd(is_stopped: Callable[[], bool]):
-        if Macros._relink_hwnd is None:
-            raise Exception("Tried to reset current hwnd when it is undefined")
-
-        # Wait for main thread to finish executing bin file
-        while not is_stopped() and Macros._is_executing:
-            pass
-
-        time.sleep(3)
-
-        is_same_hwnd = win32gui.GetForegroundWindow() == Macros._cur_hwnd
-
-        if not (is_stopped() or is_same_hwnd):
-            keyboard.press_and_release("alt")
-            win32gui.SetForegroundWindow(Macros._cur_hwnd)
-            win32api.SetCursorPos(Macros._cur_pos)
-            Macros._cur_hwnd = None
+    def delay():
+        """
+        Forces the thread to sleep so that there is a delay
+        """
+        time.sleep(constants.INPUT_DELAY)
 
     @staticmethod
-    def _exec(file_name: str):
-        """
-        Executes a macro from the bin folder
-        """
-        Macros._cur_hwnd_handler()
-
-        # Focuses application window, if applicable
-        if win32gui.GetForegroundWindow() != Macros._get_relink_hwnd():
-            keyboard.press_and_release("alt")
-            win32gui.SetForegroundWindow(Macros._get_relink_hwnd())
-
-        Macros._is_executing = True
-        os.system(f"\"{os.path.abspath(os.path.join('bin', file_name))}.exe\"")
-        Macros._is_executing = False
-
-    @staticmethod
+    @macro
     def continue_playing():
         """
         Whenever a popup prompts the user to continue playing the quest, it
         will automatically select yes
         """
-        Macros._exec("continue_playing")
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()
+
 
     @staticmethod
+    @macro
     def left_click():
         """
         Simulates a left click in the application
         """
-        Macros._exec("left_click")
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()
 
     @staticmethod
-    def left_click_spam():
+    @macro
+    def repeat_quest():
         """
-        Spams left clicks. Useful for reviving the character
+        Turns on Repeat Quest during the battle results screen
         """
-        Macros._exec("left_click_spam")
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_X)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_X)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
+        Macros._gamepad.update()
+        Macros.delay()

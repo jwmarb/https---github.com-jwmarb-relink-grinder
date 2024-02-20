@@ -26,7 +26,6 @@ def main():
         print(f"[{timestamp}]\t{msg}")
 
     while True:
-
         @decorators.loop_run_once
         def on_run_complete():
             """
@@ -40,15 +39,26 @@ def main():
         while is_on_screen(*QUEST_DONE):
             on_run_complete()
 
-            if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
-                Macros.continue_playing()
-            Macros.left_click()
+            # Select replay option first
+            if runs == 1:
+                while not is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
+                    print('waiting....')
+                    Macros.left_click()
+                print('found')
+                
+                Macros.repeat_quest()
+
+                while is_on_screen(*QUEST_DONE):
+                    Macros.left_click()
+            else:
+                if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
+                    Macros.continue_playing()
+                else:
+                    Macros.left_click()
 
         # When the user is requires a revive
         while is_on_screen(constants.HP_ZERO):
-            Macros.left_click_spam()
-
-        time.sleep(1)
+            Macros.left_click()
 
 
 if __name__ == "__main__":
