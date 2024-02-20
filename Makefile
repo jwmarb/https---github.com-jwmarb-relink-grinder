@@ -18,7 +18,7 @@ env/Scripts/activate: requirements.txt
 	./$(PIP) install -r requirements.txt
 
 run: env/Scripts/activate
-	cd src && ../$(PYTHON) main.py
+	cd src && ../$(PYTHON) $(main).py
 
 clean:
 	rm -rf $(PY_CACHE)
