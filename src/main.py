@@ -42,9 +42,7 @@ def main():
             # Select replay option first
             if runs == 1:
                 while not is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
-                    print('waiting....')
                     Macros.left_click()
-                print('found')
                 
                 Macros.repeat_quest()
 
