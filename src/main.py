@@ -26,6 +26,7 @@ def main():
         print(f"[{timestamp}]\t{msg}")
 
     while True:
+
         @decorators.loop_run_once
         def on_run_complete():
             """
@@ -43,7 +44,7 @@ def main():
             if runs == 1:
                 while not is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
                     Macros.left_click()
-                
+
                 Macros.repeat_quest()
 
                 while is_on_screen(*QUEST_DONE):

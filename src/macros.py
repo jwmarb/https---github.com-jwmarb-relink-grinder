@@ -30,6 +30,7 @@ class Macros:
         """
         Executes a macro based on virtual gamepad
         """
+
         def wrapper():
             # Focuses application window, if applicable
             if win32gui.GetForegroundWindow() != Macros._get_relink_hwnd():
@@ -58,11 +59,12 @@ class Macros:
         Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
         Macros.delay()
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        Macros._gamepad.release_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP
+        )
         Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
         Macros.delay()
-
 
     @staticmethod
     @macro
