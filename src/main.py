@@ -52,7 +52,7 @@ def main():
                 else:
                     Macros.xbox_a()
 
-            Macros.delay()
+            time.sleep(0.1)
 
         # When the user is requires a revive
         while is_on_screen(constants.HP_ZERO):
