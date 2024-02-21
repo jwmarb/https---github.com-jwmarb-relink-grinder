@@ -7,4 +7,4 @@ REPEAT_QUEST_FIRST_PROMPT = "images/repeat_quest_first_prompt.png"
 
 HWND_NAME = "Granblue Fantasy: Relink"
 CONFIDENCE = 0.7
-INPUT_DELAY = 0.05
+INPUT_DELAY = 0.001
