@@ -6,9 +6,7 @@ from macros import Macros
 from utils import is_on_screen
 
 
-def exit_listener():
-    while not keyboard.is_pressed("escape"):
-        pass
+def exit_listener(_):
     os._exit(0)
 
 
@@ -29,8 +27,6 @@ def main():
     )
 
     keyboard.on_press_key(callback=exit_listener, key="escape", suppress=True)
-
-    threading.Thread(target=exit_listener).start()
 
     while not is_on_screen(constants.INSUFFICIENT_KNICKKNACKS):
         if not paused:
