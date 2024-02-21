@@ -55,15 +55,8 @@ class Macros:
         Whenever a popup prompts the user to continue playing the quest, it
         will automatically select yes
         """
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
-        Macros._gamepad.update()
-        Macros.delay()
-        Macros._gamepad.release_button(
-            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP
-        )
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
-        Macros._gamepad.update()
-        Macros.delay()
+        Macros.xbox_dpad_up()
+        Macros.xbox_a()
 
     @staticmethod
     @macro
@@ -153,18 +146,5 @@ class Macros:
         """
         Turns on Repeat Quest during the battle results screen
         """
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_X)
-        Macros._gamepad.update()
-        Macros.delay()
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_X)
-        Macros._gamepad.update()
-        Macros.delay()
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
-        Macros._gamepad.update()
-        Macros.delay()
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
-        Macros._gamepad.update()
-        Macros.delay()
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
-        Macros._gamepad.update()
-        Macros.delay()
+        Macros.xbox_x()
+        Macros.xbox_a()
