@@ -43,20 +43,20 @@ def main():
             # Select replay option first
             if runs == 1:
                 if not is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
-                    Macros.left_click()
+                    Macros.xbox_a()
                 else:
                     Macros.repeat_quest()
             else:
                 if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
                     Macros.continue_playing()
                 else:
-                    Macros.left_click()
+                    Macros.xbox_a()
             
             Macros.delay()
 
         # When the user is requires a revive
         while is_on_screen(constants.HP_ZERO):
-            Macros.left_click()
+            Macros.xbox_a()
 
 
 if __name__ == "__main__":
