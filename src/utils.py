@@ -37,11 +37,11 @@ def format_int(n: int) -> str:
     return "0" + str(n)
 
 
-def is_on_screen(*images: str):
+def is_on_screen(*images: str, c: float = constants.CONFIDENCE):
     for file in images:
         try:
             pyautogui.locateOnScreen(
-                image=file, confidence=constants.CONFIDENCE
+                image=file, confidence=c
             )
             return True
         except pyautogui.ImageNotFoundException:
