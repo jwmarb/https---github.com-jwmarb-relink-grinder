@@ -51,7 +51,7 @@ def main():
                     Macros.continue_playing()
                 else:
                     Macros.xbox_a()
-            
+
             Macros.delay()
 
         # When the user is requires a revive

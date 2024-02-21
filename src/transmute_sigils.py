@@ -110,9 +110,8 @@ def main():
         Macros.xbox_a()
         time.sleep(DELAY)
 
-        # At this point, the process starts again until the user desires to 
+        # At this point, the process starts again until the user desires to
         # end the script
-
 
 
 if __name__ == "__main__":

@@ -111,7 +111,9 @@ class Macros:
         Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
         Macros._gamepad.update()
         Macros.delay()
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        Macros._gamepad.release_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP
+        )
         Macros._gamepad.update()
         Macros.delay()
 
@@ -121,10 +123,14 @@ class Macros:
         """
         Simulates the pressing of dpad down on xbox in the application
         """
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN)
+        Macros._gamepad.press_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN
+        )
         Macros._gamepad.update()
         Macros.delay()
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN)
+        Macros._gamepad.release_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN
+        )
         Macros._gamepad.update()
         Macros.delay()
 
@@ -140,8 +146,6 @@ class Macros:
         Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_BACK)
         Macros._gamepad.update()
         Macros.delay()
-        
-
 
     @staticmethod
     @macro
