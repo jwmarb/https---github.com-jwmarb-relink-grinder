@@ -67,9 +67,9 @@ class Macros:
 
     @staticmethod
     @macro
-    def left_click():
+    def xbox_a():
         """
-        Simulates a left click in the application
+        Simulates the pressing of the A button on xbox in the application
         """
         Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
@@ -77,6 +77,71 @@ class Macros:
         Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_A)
         Macros._gamepad.update()
         Macros.delay()
+
+    @staticmethod
+    @macro
+    def xbox_b():
+        """
+        Simulates the pressing of the B button on xbox in the application
+        """
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_B)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_B)
+        Macros._gamepad.update()
+        Macros.delay()
+
+    def xbox_x():
+        """
+        Simulates the pressing of the X button on xbox in the application
+        """
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_X)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_X)
+        Macros._gamepad.update()
+        Macros.delay()
+
+    @staticmethod
+    @macro
+    def xbox_dpad_up():
+        """
+        Simulates the pressing of dpad up on xbox in the application
+        """
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP)
+        Macros._gamepad.update()
+        Macros.delay()
+
+    @staticmethod
+    @macro
+    def xbox_dpad_down():
+        """
+        Simulates the pressing of dpad down on xbox in the application
+        """
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN)
+        Macros._gamepad.update()
+        Macros.delay()
+
+    @staticmethod
+    @macro
+    def xbox_back():
+        """
+        Simulates the pressing of the back button on xbox in the application
+        """
+        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_BACK)
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_BACK)
+        Macros._gamepad.update()
+        Macros.delay()
+        
+
 
     @staticmethod
     @macro
