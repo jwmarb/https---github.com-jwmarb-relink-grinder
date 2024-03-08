@@ -41,22 +41,20 @@ def main():
             on_run_complete()
 
             # Select replay option first
-            if runs == 1:
-                if not is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
-                    Macros.xbox_a()
-                else:
-                    Macros.repeat_quest()
-            else:
-                if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
-                    Macros.continue_playing()
-                else:
-                    Macros.xbox_a()
-
-            time.sleep(0.1)
+            if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
+                Macros.continue_playing()
+            if is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
+                Macros.repeat_quest()               
+                 
+            Macros.xbox_a()
 
         # When the user is requires a revive
         while is_on_screen(constants.HP_ZERO):
             Macros.xbox_a()
+
+        # When a Link Attack is prompted, the player should activate it
+        while is_on_screen(constants.LINK_ATTACK):
+            Macros.xbox_b()
 
 
 if __name__ == "__main__":
