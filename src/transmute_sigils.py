@@ -228,11 +228,11 @@ def main():
                 Macros.xbox_a()
 
         match option:
-            case KnickknackVoucherMethod.DO_NOTHING:
+            case KnickknackVoucherMethod.DO_NOTHING.value:
                 continue
-            case KnickknackVoucherMethod.TRADE_SIGILS:
+            case KnickknackVoucherMethod.TRADE_SIGILS.value:
                 sell_sigils()
-            case KnickknackVoucherMethod.TRADE_WRIGHTSTONES:
+            case KnickknackVoucherMethod.TRADE_WRIGHTSTONES.value:
                 sell_wrightstones()
 
 
