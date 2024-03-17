@@ -1,15 +1,24 @@
+import enum
 import time
 import constants
 import keyboard
-import threading
 import os
 from macros import Macros
 from utils import is_on_screen
 
 DELAY = 0.25
 
+
+class KnickknackVoucherMethod(enum.Enum):
+    TRADE_SIGILS = 1
+    TRADE_WRIGHTSTONES = 2
+    DO_NOTHING = 3
+
+
 def exit_listener(_):
+    print("Stopped auto-transmute sigils")
     os._exit(0)
+
 
 def sell_sigils():
     # User navigates back to transmute sigils screen
@@ -17,11 +26,11 @@ def sell_sigils():
         Macros.xbox_a()
         time.sleep(0.5)
 
-    time.sleep(1)
+    time.sleep(DELAY)
 
     # Back to main navigation
     Macros.xbox_b()
-    time.sleep(DELAY)
+    time.sleep(1)
 
     # Highlights "Knickknack Vouchers"
     Macros.xbox_dpad_up()
@@ -90,17 +99,123 @@ def sell_sigils():
     # At this point, the process starts again until the user desires to
     # end the script
 
+
+SHOULD_STOP_WRIGHTSTONE_TRADE = [
+    constants.WRIGHTSTONES_EXCESSIVE,
+    constants.WRIGHTSTONES_UNABLE_TO_SELECT,
+]
+
+
+def sell_wrightstones():
+    # User navigates back to transmute sigils screen
+    while not is_on_screen(constants.SELECT_TRANSMUTATION, c=0.99):
+        Macros.xbox_a()
+        time.sleep(0.5)
+
+    time.sleep(1)
+
+    # Back to main navigation
+    Macros.xbox_b()
+    time.sleep(DELAY * 3)
+
+    # Highlights "Knickknack Vouchers"
+    Macros.xbox_dpad_up()
+    time.sleep(DELAY)
+
+    # Navigates into "Knickknack Vouchers"
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+    # Navigates into "Trade Wrightstones"
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+    # Selects as many wrightstones as it can
+    while not is_on_screen(*SHOULD_STOP_WRIGHTSTONE_TRADE):
+        Macros.xbox_a()
+        Macros.xbox_dpad_down()
+        time.sleep(0.01)
+
+    # Goes to top since it could not select it
+    Macros.xbox_dpad_left()
+    time.sleep(DELAY)
+
+    # Trade Wrightstones
+    Macros.xbox_x()
+    time.sleep(DELAY)
+
+    # Moves from Cancel to Trade
+    Macros.xbox_dpad_up()
+    time.sleep(DELAY)
+
+    # Confirms "Trade"
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+    # Ticks Trade
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+    # Navigates to "Trade" option
+    Macros.xbox_dpad_down()
+    time.sleep(DELAY)
+
+    # Confirms "Trade"
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+    # Exits out of prompt by preessing "OK"
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+    # Exits out of "Trade Wrightstones"
+    Macros.xbox_b()
+    time.sleep(DELAY)
+
+    # Exits out of "Knickknack Vouchers"
+    Macros.xbox_b()
+    time.sleep(DELAY)
+
+    # Moves selected option top "Transmute Sigils"
+    Macros.xbox_dpad_down()
+    time.sleep(DELAY)
+
+    # Confirms navigation into "Transmute Sigils"
+    Macros.xbox_a()
+    time.sleep(DELAY)
+
+
 def main():
     paused = False
+    option: int | None = None
+
+    while option is None:
+        print("Select restock knickknack vouchers method")
+        print("1. Trade Treasure")
+        print("2. Trade Wrightstones")
+        print("3. Do nothing")
+        option = int(input("\nType an option (1-3): ").strip())
+        os.system("cls")
+
+    print(
+        "To pause transmutation, press BACKSPACE\
+                    (this does not work when program is in the process of \
+                        restocking knickknack vouchers)"
+    )
 
     def pause_listener(_):
         nonlocal paused
         paused = not paused
-        print(
-            "Auto-Transmute Sigils Paused"
-            if paused
-            else "Resumed Auto-Transmute Sigils"
-        )
+        if paused:
+            os.system("cls")
+            print("Auto-Transmute Sigils Paused")
+        else:
+            os.system("cls")
+            print(
+                "To pause transmutation, press BACKSPACE\
+                    (this does not work when program is in the process of \
+                        restocking knickknack vouchers)"
+            )
 
     keyboard.on_press_key(
         callback=pause_listener, key="backspace", suppress=True
@@ -113,8 +228,13 @@ def main():
             if not paused:
                 Macros.xbox_a()
 
-        sell_sigils()
-        
+        match option:
+            case KnickknackVoucherMethod.DO_NOTHING:
+                continue
+            case KnickknackVoucherMethod.TRADE_SIGILS:
+                sell_sigils()
+            case KnickknackVoucherMethod.TRADE_WRIGHTSTONES:
+                sell_wrightstones()
 
 
 if __name__ == "__main__":

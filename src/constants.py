@@ -10,6 +10,9 @@ SELECT_TRANSMUTATION = "images/select_transmutation.png"
 TRADE_ALL = "images/trade_all.png"
 TRADE_WARNING = "images/trade_warning.png"
 LINK_ATTACK = "images/link_atk.png"
+NO_WRIGHTSTONES = "images/no_matching_wrightstones.png"
+WRIGHTSTONES_UNABLE_TO_SELECT = "images/wrightstones-cant-select.png"
+WRIGHTSTONES_EXCESSIVE = "images/wrightstones_excessive.png"
 
 HWND_NAME = "Granblue Fantasy: Relink"
 CONFIDENCE = 0.7

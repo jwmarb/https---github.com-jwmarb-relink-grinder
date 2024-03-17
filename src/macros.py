@@ -112,6 +112,23 @@ class Macros:
 
     @staticmethod
     @macro
+    def xbox_dpad_left():
+        """
+        Simulates the pressing of dpad left on xbox in the application
+        """
+        Macros._gamepad.press_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_LEFT
+        )
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_LEFT
+        )
+        Macros._gamepad.update()
+        Macros.delay()
+
+    @staticmethod
+    @macro
     def xbox_dpad_down():
         """
         Simulates the pressing of dpad down on xbox in the application
