@@ -191,7 +191,7 @@ def main():
 
     while option is None:
         print("Select restock knickknack vouchers method")
-        print("1. Trade Treasure")
+        print("1. Trade Sigils")
         print("2. Trade Wrightstones")
         print("3. Do nothing")
         option = int(input("\nType an option (1-3): ").strip())
