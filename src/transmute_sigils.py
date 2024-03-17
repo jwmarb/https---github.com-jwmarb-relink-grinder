@@ -16,6 +16,7 @@ class KnickknackVoucherMethod(enum.Enum):
 
 
 def exit_listener(_):
+    os.system('cls')
     print("Stopped auto-transmute sigils")
     os._exit(0)
 
