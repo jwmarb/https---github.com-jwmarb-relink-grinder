@@ -43,9 +43,11 @@ def main():
             # Select replay option first
             if is_on_screen(constants.CONTINUE_PLAYING_QUEST):
                 Macros.continue_playing()
+                time.sleep(1)
             if is_on_screen(constants.REPEAT_QUEST_FIRST_PROMPT):
-                Macros.repeat_quest()               
-                 
+                Macros.repeat_quest()
+                time.sleep(1)
+
             Macros.xbox_a()
 
         # When the user is requires a revive
