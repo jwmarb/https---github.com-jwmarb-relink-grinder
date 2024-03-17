@@ -198,10 +198,9 @@ def main():
         os.system("cls")
 
     print(
-        "To pause transmutation, press BACKSPACE\
-                    (this does not work when program is in the process of \
-                        restocking knickknack vouchers)"
+        "To pause transmutation, press BACKSPACE"
     )
+    print("NOTE: Only works while transmuting sigils")
 
     def pause_listener(_):
         nonlocal paused
