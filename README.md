@@ -13,18 +13,23 @@ _Relink Grinder_ is an afk script for the video game, [Granblue Fantasy: Relink]
 
 ## Why use this?
 
-Upgrading equipment is **expensive**, and it can take days to fully maximize your equipment. Since not everyone has time to grind, AFK farming is one of the methods to get upgrade materials. However, Cygames has an anti-afk service in the game that prompts the user, once they have completed 10 runs, whether they want to continue playing a quest. If no response is provided, the user will be sent back to the lobby. Because of this, **afk farming is only limited to 10 runs.**
+Upgrading equipment is **expensive**, and it can take days to fully maximize your equipment. Since not everyone has time
+to grind, AFK farming is one of the methods to get upgrade materials. However, Cygames has an anti-afk service in the
+game that prompts the user, once they have completed 10 runs, whether they want to continue playing a quest. If no
+response is provided, the user will be sent back to the lobby. Because of this, **true afk farming is only limited to 10
+runs** and user intervention is required to skip the anti-afk prompt.
 
-_Relink Grinder_ allows the user to afk for more than 10 runs by automatically detecting the anti-AFK prompt and continuing the quest without user input required.
+## Program features
 
-Additionally, _Relink Grinder_ automatically attempts to revive the player if they are down to prevent the quest from failing, thus reducing the likelihood of a run failing.
+- Quests
+  - Continues quest after 10 runs, bypassing the user intervention requirement
+  - Performs link attack whenever possible
+  - Attempts to revive the player's character when they are below 0 HP
+- Siero's Knickknack Shack
+  - Automatic sigil transmutation with a way to restock knickknack vouchers
+    - Restocking knickknack vouchers can be done via through **Trade Sigils** or **Trade Wrightstones**
 
 ## How To Use
-
-### In-game Prerequisites
-
-1. At least 3 CPU party members capable of doing a run
-2. Max defence/HP build on your player character
 
 There is no executable, so this is required:
 
@@ -46,20 +51,73 @@ Using the same terminal, navigate to it and run `make` to install dependencies:
 cd relink-grinder && make
 ```
 
-Before running the program, make sure **Granblue Fantasy: Relink** is opened, and navigate to any quest of your choice (make sure your CPU team is capable of completing it)
+After this, you can run the following scripts below:
 
-You will have to complete the quest first. Once you have completed the quest, you should be in the quest results screen. Enable `Repeat Quest`, then activate the afk script in the same terminal:
+### Quest Farming
+
+#### In-game Prerequisites
+
+1. At least 3 CPU party members capable of doing a run
+2. Max defence/HP build on your player character
+
+Before running this script, make sure **Granblue Fantasy: Relink** is opened, and navigate to any quest of your choice (make sure your CPU team is capable of completing it)
+
+When you have selected a quest and are transitioning into it, you can start the program like so:
 
 ```sh
 make run main=main
 ```
 
-You should see something like:
+When the quest completes, you should see something a timestamp followed by the # of runs completed, which can look like:
 
 ```
-[00:00:00] Runs completed: 1
+[00:01:24] Runs completed: 1
 ```
 
 When this happens, you should see your cursor disappear and the **Granblue Fantasy: Relink** window be focused. This means that the afk script is now running.
 
 To end the script, press `ESC` on your keyboard
+
+### Transmuting Sigils
+
+#### In-game Prerequisites
+
+1. Knickknack Vouchers
+2. Wrightstones or sigils that you are willing to trade for
+
+Go to **Siero's Knickknack Shack**, and before you can run the script, you must set up your navigation pathing
+so the scripts work properly.
+
+First, navigate into **Knickknack Vouchers**, then you will see three tabs you can navigate into: `Trade Treasure`,
+`Trade Sigils`, `Trade Wrightstones`
+
+For now, trading treasures is not supported. Navigate into either `Trade Sigils` or `Trade Wrighstones`. Follow the
+instructions below for the specific tab:
+
+- `Trade Sigils`
+
+  1. Navigate into `Sort & Filter/Trade All`
+  2. Switch to `Trade All` tab
+  3. Select categories that match the sigils you want to trade for (do not trade)
+  4. Go back to **Siero's Knickknack Shack** main screen without manipulating the selected navigation paths. (If you
+     exit **Siero's Knickknack Shack** accidentally, you must start over and repeat)
+
+- `Trade Wrightstones`
+  1. **NOTE**: If you want to trade every wrightstone you have, you can go straight to step iv. The steps below are
+     simply for filtering out wrightstones you do not want to trade.
+  2. Navigate into `Sort & Filter`
+  3. Under the `Filter` tab, select categories for the wrightstones you want to trade for. (ex. If you want to trade
+     every wrightstone except the ones with 3 stats in it, simply select `1` and `2` for **Number of Traits**)
+  4. Once you have set your filters, go back to **Siero's Knickknack Shack** main screen without manipulating the
+     selected navigation paths. (If you exit **Siero's Knickknack Shack** accidentally, you must start over and repeat)
+
+While you're at the main screen of **Siero's Knickknack Shack**, navigate into **Transmute Sigils** then select the
+desired transmutation level. Once you selected (aka highlighted) a transmutation level, you can start the script by
+running the following (while in the root directory of this repository):
+
+```sh
+make run main=transmute_sigils
+```
+
+Then select whichever option, and the script will run. The script will automatically stop when you have no more to trade
+for in that selected option.
