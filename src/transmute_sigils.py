@@ -136,14 +136,19 @@ def sell_wrightstones():
         Macros.xbox_a()
         Macros.xbox_dpad_down()
         time.sleep(0.01)
+        if not is_on_screen(constants.WRIGHTSTONES_BLANKCHECKBOX, c=0.9) or \
+        not is_on_screen(constants.WRIGHTSTONES_BLANKCHECKBOX_SELECTED, c=0.9):
+            break
 
-    # Goes to top since it could not select it
-    Macros.xbox_dpad_left()
     time.sleep(DELAY)
 
     # Trade Wrightstones
     Macros.xbox_x()
-    time.sleep(DELAY)
+    time.sleep(1)
+
+    if not is_on_screen(constants.TRADE_INVOICES):
+        print("You have no more wrightstones to trade for")
+        os._exit(0)
 
     # Moves from Cancel to Trade
     Macros.xbox_dpad_up()
