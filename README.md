@@ -121,3 +121,11 @@ make run main=transmute_sigils
 
 Then select whichever option, and the script will run. The script will automatically stop when you have no more to trade
 for in that selected option.
+
+#### Video Demos w/ Terminal
+
+https://github.com/jwmarb/relink-grinder/assets/26177786/b72f4c63-3075-4b25-93dc-2db6660e7b05
+
+https://github.com/jwmarb/relink-grinder/assets/26177786/c35d4609-7a92-475c-bb66-436e45ee495d
+
+
