@@ -46,3 +46,10 @@ def is_on_screen(*images: str, c: float = constants.CONFIDENCE):
             pass
 
     return False
+
+def is_sba_gauge_full():
+    try:
+        pyautogui.locateOnScreen(constants.SBA_GAUGE_FULL, region=(899,815, 120, 98), confidence=0.40)
+        return True
+    except pyautogui.ImageNotFoundException:
+        return False
