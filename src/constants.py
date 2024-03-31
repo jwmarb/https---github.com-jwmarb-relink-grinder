@@ -14,11 +14,11 @@ NO_WRIGHTSTONES = "images/no_matching_wrightstones.png"
 WRIGHTSTONES_UNABLE_TO_SELECT = "images/wrightstones-cant-select.png"
 WRIGHTSTONES_EXCESSIVE = "images/wrightstones_excessive.png"
 WRIGHTSTONES_BLANKCHECKBOX = "images/blank_checkbox.png"
-WRIGHTSTONES_BLANKCHECKBOX_SELECTED = 'images/blank_checkbox_selected.png'
-TRADE_INVOICES = 'images/trade_invoice.png'
-SBA_GAUGE_FULL = 'images/sba.png'
-REPLAY_QUEST_INDICATOR = 'images/replay_quest_indicator.png'
-SIDE_GOALS = 'images/side_goals.png'
+WRIGHTSTONES_BLANKCHECKBOX_SELECTED = "images/blank_checkbox_selected.png"
+TRADE_INVOICES = "images/trade_invoice.png"
+SBA_GAUGE_FULL = "images/sba.png"
+REPLAY_QUEST_INDICATOR = "images/replay_quest_indicator.png"
+SIDE_GOALS = "images/side_goals.png"
 
 HWND_NAME = "Granblue Fantasy: Relink"
 CONFIDENCE = 0.7
