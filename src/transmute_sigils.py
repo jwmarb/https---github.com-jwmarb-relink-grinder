@@ -1,10 +1,16 @@
 import enum
 import time
-import constants
 import keyboard
 import os
 from macros import Macros
-from utils import is_on_screen
+from utils import (
+    can_trade_sigils,
+    can_trade_wrightstones,
+    has_insufficient_knickknacks,
+    has_interactable_checkboxes,
+    is_transmute_sigils_screen_shown,
+    trade_invoice_shown,
+)
 
 DELAY = 0.25
 
@@ -16,14 +22,14 @@ class KnickknackVoucherMethod(enum.Enum):
 
 
 def exit_listener(_):
-    os.system('cls')
+    os.system("cls")
     print("Stopped auto-transmute sigils")
     os._exit(0)
 
 
 def sell_sigils():
     # User navigates back to transmute sigils screen
-    while not is_on_screen(constants.SELECT_TRANSMUTATION, c=0.99):
+    while not is_transmute_sigils_screen_shown():
         Macros.xbox_a()
         time.sleep(0.5)
 
@@ -53,7 +59,7 @@ def sell_sigils():
     Macros.xbox_x()
     time.sleep(1)
 
-    if not is_on_screen(constants.TRADE_ALL):
+    if not can_trade_sigils():
         print("You have no more sigils to trade for")
         os._exit(0)
 
@@ -101,15 +107,9 @@ def sell_sigils():
     # end the script
 
 
-SHOULD_STOP_WRIGHTSTONE_TRADE = [
-    constants.WRIGHTSTONES_EXCESSIVE,
-    constants.WRIGHTSTONES_UNABLE_TO_SELECT,
-]
-
-
 def sell_wrightstones():
     # User navigates back to transmute sigils screen
-    while not is_on_screen(constants.SELECT_TRANSMUTATION, c=0.99):
+    while not is_transmute_sigils_screen_shown():
         Macros.xbox_a()
         time.sleep(0.5)
 
@@ -132,13 +132,10 @@ def sell_wrightstones():
     time.sleep(DELAY)
 
     # Selects as many wrightstones as it can
-    while not is_on_screen(*SHOULD_STOP_WRIGHTSTONE_TRADE):
+    while can_trade_wrightstones() and has_interactable_checkboxes():  #
         Macros.xbox_a()
         Macros.xbox_dpad_down()
         time.sleep(0.01)
-        if not is_on_screen(constants.WRIGHTSTONES_BLANKCHECKBOX, c=0.9) or \
-        not is_on_screen(constants.WRIGHTSTONES_BLANKCHECKBOX_SELECTED, c=0.9):
-            break
 
     time.sleep(DELAY)
 
@@ -146,7 +143,7 @@ def sell_wrightstones():
     Macros.xbox_x()
     time.sleep(1)
 
-    if not is_on_screen(constants.TRADE_INVOICES):
+    if not trade_invoice_shown():
         print("You have no more wrightstones to trade for")
         os._exit(0)
 
@@ -203,9 +200,7 @@ def main():
         option = int(input("\nType an option (1-3): ").strip())
         os.system("cls")
 
-    print(
-        "To pause transmutation, press BACKSPACE"
-    )
+    print("To pause transmutation, press BACKSPACE")
     print("NOTE: Only works while transmuting sigils")
 
     def pause_listener(_):
@@ -216,9 +211,7 @@ def main():
             print("Auto-Transmute Sigils Paused")
         else:
             os.system("cls")
-            print(
-                "To pause transmutation, press BACKSPACE"
-            )
+            print("To pause transmutation, press BACKSPACE")
             print("NOTE: Only works while transmuting sigils")
 
     keyboard.on_press_key(
@@ -228,7 +221,7 @@ def main():
     keyboard.on_press_key(callback=exit_listener, key="escape", suppress=True)
 
     while True:
-        while not is_on_screen(constants.INSUFFICIENT_KNICKKNACKS):
+        while not has_insufficient_knickknacks():
             if not paused:
                 Macros.xbox_a()
 
