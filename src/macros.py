@@ -165,3 +165,23 @@ class Macros:
         """
         Macros.xbox_x()
         Macros.xbox_a()
+
+    @staticmethod
+    @macro
+    def use_sba():
+        Macros._gamepad.press_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB
+        )
+        Macros._gamepad.press_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_RIGHT_THUMB
+        )
+        Macros._gamepad.update()
+        Macros.delay()
+        Macros._gamepad.release_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB
+        )
+        Macros._gamepad.release_button(
+            vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_RIGHT_THUMB
+        )
+        Macros._gamepad.update()
+        Macros.delay()
