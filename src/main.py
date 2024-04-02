@@ -1,4 +1,6 @@
 import multiprocessing
+import os
+import threading
 import time
 import keyboard
 from macros import Macros
@@ -14,6 +16,7 @@ from utils import (
 )
 from utils import format_int
 import vgamepad
+import keybinds
 
 PROCESS_NOT_BUSY = 0x1
 PROCESS_BUSY = 0x7
@@ -30,12 +33,26 @@ class Character:
 
     @Macros.macro
     def lancelot():
-        Macros._gamepad.press_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_Y)
-        Macros._gamepad.left_trigger(255)
+        Macros._gamepad.press_button(keybinds.SPECIAL_ATTACK)
+        Macros._gamepad.press_button(keybinds.LINK_ATTACK)
+        Macros._gamepad.release_button(keybinds.LEFT_THUMB)
+        Macros._gamepad.release_button(keybinds.RIGHT_THUMB)
+        Macros._gamepad.release_button(keybinds.GUARD)
+        if keybinds.AUTO_TARGET == keybinds.LEFT_TRIGGER:
+            Macros._gamepad.left_trigger(255)
+        else:
+            Macros._gamepad.press_button(keybinds.AUTO_TARGET)
         Macros._gamepad.update()
         time.sleep(0.01)
-        Macros._gamepad.release_button(vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_Y)
-        Macros._gamepad.left_trigger(0)
+        Macros._gamepad.release_button(keybinds.SPECIAL_ATTACK)
+        Macros._gamepad.release_button(keybinds.LINK_ATTACK)
+        Macros._gamepad.press_button(keybinds.LEFT_THUMB)
+        Macros._gamepad.press_button(keybinds.RIGHT_THUMB)
+        Macros._gamepad.press_button(keybinds.GUARD)
+        if keybinds.AUTO_TARGET == keybinds.LEFT_TRIGGER:
+            Macros._gamepad.left_trigger(0)
+        else:
+            Macros._gamepad.release_button(keybinds.AUTO_TARGET)
         Macros._gamepad.update()
         time.sleep(0.01)
 
@@ -60,11 +77,13 @@ def battle_results_process(time_start: float, status):
         if battle_results_shown():
             with status.get_lock():
                 status.value = PROCESS_BUSY
-                while battle_results_shown():
+                while battle_results_shown() and \
+                status.value is not END_PROCESS:
                     if not has_looped:
                         on_run_complete(time_start)
                         has_looped = True
                     # Select replay option first
+                    Macros.release_buttons()
                     if should_replay_quest():
                         Macros.continue_playing()
                     elif should_repeat_quest():
@@ -74,33 +93,33 @@ def battle_results_process(time_start: float, status):
             status.value = PROCESS_NOT_BUSY
 
 
-def link_attack_process(status):
-    """
-    Detects and handles link attacks
-    """
-    while status.value is not END_PROCESS:
-        # When a Link Attack is prompted, the player should activate it
-        if is_link_attack_available():
-            with status.get_lock():
-                status.value = PROCESS_BUSY
-                Macros.xbox_b()
-                while is_link_attack_available():
-                    Macros.xbox_b()
-            status.value = PROCESS_NOT_BUSY
+# def link_attack_process(status):
+#     """
+#     Detects and handles link attacks
+#     """
+#     while status.value is not END_PROCESS:
+#         # When a Link Attack is prompted, the player should activate it
+#         if is_link_attack_available():
+#             with status.get_lock():
+#                 status.value = PROCESS_BUSY
+#                 Macros.xbox_b()
+#                 while is_link_attack_available():
+#                     Macros.xbox_b()
+#             status.value = PROCESS_NOT_BUSY
 
 
-def sba_process(status):
-    """
-    Detects and handles SBAs
-    """
-    while status.value is not END_PROCESS:
-        if is_sba_gauge_full():
-            with status.get_lock():
-                status.value = PROCESS_BUSY
-                Macros.use_sba()
-                while is_sba_gauge_full():
-                    Macros.use_sba()
-            status.value = PROCESS_NOT_BUSY
+# def sba_process(status):
+#     """
+#     Detects and handles SBAs
+#     """
+#     while status.value is not END_PROCESS:
+#         if is_sba_gauge_full():
+#             with status.get_lock():
+#                 status.value = PROCESS_BUSY
+#                 Macros.use_sba()
+#                 while is_sba_gauge_full():
+#                     Macros.use_sba()
+#             status.value = PROCESS_NOT_BUSY
 
 
 def player_reviver_process(status, character: int):
@@ -109,16 +128,18 @@ def player_reviver_process(status, character: int):
     """
 
     def revive():
+        Macros.release_buttons()
         if character == Character.LANCELOT:
             Macros._gamepad.press_button(
-                vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN
+                keybinds.POTION_REVIVE
             )
             Macros._gamepad.update()
             time.sleep(0.5)
             Macros._gamepad.release_button(
-                vgamepad.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN
+                keybinds.POTION_REVIVE
             )
             Macros._gamepad.update()
+            time.sleep(0.5)
         else:
             Macros.xbox_a()
 
@@ -128,7 +149,8 @@ def player_reviver_process(status, character: int):
             with status.get_lock():
                 status.value = PROCESS_BUSY
                 revive()
-                while is_hp_zero():
+                while is_hp_zero() and\
+                status.value is not END_PROCESS:
                     revive()
             status.value = PROCESS_NOT_BUSY
 
@@ -146,6 +168,7 @@ def terminate_program(start_time: float, status):
     seconds, minutes, hours = get_timestamp(start_time)
     print(f"AFK farm session lasted for {hours}h {minutes}m {seconds}s")
     status.value = END_PROCESS
+    os._exit(0)
 
 
 def main():
@@ -158,22 +181,23 @@ def main():
     time_start = time.perf_counter()
 
     status = multiprocessing.Value("B", PROCESS_NOT_BUSY)
-    p1 = multiprocessing.Process(
-        target=battle_results_process, args=(time_start, status)
+    p1 = threading.Thread(
+        target=battle_results_process, args=(time_start, status),
+        daemon=True
     )
-    p2 = multiprocessing.Process(target=link_attack_process, args=(status,))
-    p3 = multiprocessing.Process(target=sba_process, args=(status,))
+    # p2 = multiprocessing.Process(target=link_attack_process, args=(status,))
+    # p3 = multiprocessing.Process(target=sba_process, args=(status,))
     keyboard.on_press_key(
         key="esc",
         callback=lambda _: terminate_program(time_start, status),
         suppress=True,
     )
-    p4 = multiprocessing.Process(
-        target=player_reviver_process, args=(status, character)
+    p4 = threading.Thread(
+        target=player_reviver_process, args=(status, character), daemon=True
     )
     p1.start()
-    p2.start()
-    p3.start()
+    # p2.start()
+    # p3.start()
     p4.start()
     while status.value is not END_PROCESS:
         match character:
@@ -183,8 +207,8 @@ def main():
             case Character.OTHER:
                 pass
     p1.join()
-    p2.join()
-    p3.join()
+    # p2.join()
+    # p3.join()
     p4.join()
 
     # while True:

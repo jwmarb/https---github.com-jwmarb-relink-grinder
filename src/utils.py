@@ -56,8 +56,8 @@ def is_sba_gauge_full():
     try:
         pyautogui.locateOnScreen(
             constants.SBA_GAUGE_FULL,
-            region=(899, 815, 120, 98),
-            confidence=0.6,
+            region=(899, 700, 120, 200),
+            confidence=0.4,
         )
         return True
     except pyautogui.ImageNotFoundException:
@@ -68,7 +68,7 @@ def is_link_attack_available():
     try:
         pyautogui.locateOnScreen(
             constants.LINK_ATTACK,
-            region=(1138, 657, 154, 41),
+            region=(1130, 650, 180, 50),
             confidence=constants.CONFIDENCE,
         )
         return True
@@ -80,7 +80,7 @@ def is_hp_zero():
     try:
         pyautogui.locateOnScreen(
             constants.HP_ZERO,
-            region=(533, 682, 166, 25),
+            region=(533, 680, 166, 27),
             confidence=constants.CONFIDENCE,
         )
         return True
@@ -110,7 +110,7 @@ def should_repeat_quest():
     try:
         pyautogui.locateOnScreen(
             constants.REPEAT_QUEST_FIRST_PROMPT,
-            region=(229, 969, 104, 15),
+            region=(229, 950, 104, 40),
             confidence=constants.CONFIDENCE,
         )
         return True
@@ -122,7 +122,7 @@ def should_replay_quest():
     try:
         pyautogui.locateOnScreen(
             constants.CONTINUE_PLAYING_QUEST,
-            region=(780, 490, 358, 34),
+            region=(780, 460, 358, 60),
             confidence=constants.CONFIDENCE,
         )
         return True
