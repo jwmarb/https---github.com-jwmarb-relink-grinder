@@ -111,6 +111,15 @@ class Macros:
         Macros.delay()
 
     @staticmethod
+    def release_buttons():
+        """
+        Releases all buttons
+        """
+        Macros._gamepad.reset()
+        Macros._gamepad.update()
+        time.sleep(0.01)
+
+    @staticmethod
     @macro
     def xbox_dpad_left():
         """
