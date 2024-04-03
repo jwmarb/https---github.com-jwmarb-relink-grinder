@@ -33,11 +33,11 @@ runs** and user intervention is required to skip the anti-afk prompt.
 
 This program does not require a high performance computer to run. You do not need a strong GPU for this from my testing.
 
-On a Lenovo Slim 7i 16" (i7-12700H, 32GB DDR5 RAM, Intel Arc A370M), for _25 hours_, the application still ran Lucilius
+On a Lenovo Slim 7i 16" (i7-12700H, 32GB DDR5 RAM, Intel Arc A370M), for **25 hours**, the application still ran Lucilius
 Proud fight, reaching up to the 99th run (before I stopped it) while each fight lasted 14-16 minutes. FPS averaged
 around 30-40 fps on the lowest graphic settings with the device display set at 1920x1080.
 
-On a custom build pc (i7-13700K, 32GB DDR4 RAM, RX 5700 XT), for _8 hours_, the application still ran Lucilius Proud
+On a custom build pc (i7-13700K, 32GB DDR4 RAM, RX 5700 XT), for **8 hours**, the application still ran Lucilius Proud
 fight, reaching up to the 30th run (before I stopped it) while each fight lasted 14-16 minutes. FPS averaged 90-120 fps
 on the highest graphic settings with the device display set at 1920x1080.
 
