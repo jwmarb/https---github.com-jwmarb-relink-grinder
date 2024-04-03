@@ -29,6 +29,20 @@ runs** and user intervention is required to skip the anti-afk prompt.
   - Automatic sigil transmutation with a way to restock knickknack vouchers
     - Restocking knickknack vouchers can be done via through **Trade Sigils** or **Trade Wrightstones**
 
+## Performance & Benchmarks
+
+This program does not require a high performance computer to run. You do not need a strong GPU for this from my testing.
+
+On a Lenovo Slim 7i 16" (i7-12700H, 32GB DDR5 RAM, Intel Arc A370M), for _25 hours_, the application still ran Lucilius
+Proud fight, reaching up to the 99th run (before I stopped it) while each fight lasted 14-16 minutes. FPS averaged
+around 30-40 fps on the lowest graphic settings with the device display set at 1920x1080.
+
+On a custom build pc (i7-13700K, 32GB DDR4 RAM, RX 5700 XT), for _8 hours_, the application still ran Lucilius Proud
+fight, reaching up to the 30th run (before I stopped it) while each fight lasted 14-16 minutes. FPS averaged 90-120 fps
+on the highest graphic settings with the device display set at 1920x1080.
+
+Overall, this should work on every pc regardless of specs. This program is optimized to be run on a single-core.
+
 ## How To Use
 
 There is no executable, so this is required:
@@ -127,5 +141,3 @@ for in that selected option.
 https://github.com/jwmarb/relink-grinder/assets/26177786/b72f4c63-3075-4b25-93dc-2db6660e7b05
 
 https://github.com/jwmarb/relink-grinder/assets/26177786/c35d4609-7a92-475c-bb66-436e45ee495d
-
-
